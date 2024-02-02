@@ -3231,7 +3231,7 @@ def smooth_l1_loss(
     target: Tensor,
     size_average: Optional[bool] = None,
     reduce: Optional[bool] = None,
-    reduction: str = "mean",
+    reduction: str = "sum",
     beta: float = 1.0,
 ) -> Tensor:
     r"""Compute the Smooth L1 loss.
@@ -3241,6 +3241,10 @@ def smooth_l1_loss(
 
     See :class:`~torch.nn.SmoothL1Loss` for details.
     """
+    if reduction!='sum':
+        raise ValueError(
+            f"Only reduction mode sum is supported"
+        )
     if has_torch_function_variadic(input, target):
         return handle_torch_function(
             smooth_l1_loss,
